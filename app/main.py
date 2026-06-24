@@ -31,14 +31,19 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # --- CORS : autorise uniquement le frontend React déclaré dans .env ---
+origins = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://aimeroldbouanga.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # --- Routes ---
 app.include_router(auth.router)
 app.include_router(contact.router)
